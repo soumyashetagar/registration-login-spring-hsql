@@ -10,11 +10,11 @@ pipeline {
                     sh 'mvn clean package'
                  }
             }
-        stage("build & SonarQube analysis") {
+        stage("nexus") {
             steps {
-              withSonarQubeEnv('sonarqube') {
-                sh 'mvn sonar:sonar -Pprofile1'
-              }
+            
+            nexusArtifactUploader artifacts: [[artifactId: 'spring-boot-starter-parent', classifier: '', file: '/var/lib/jenkins/workspace/DeployPipeline/target/auth-1.3.5.RELEASE.war', type: 'war']], credentialsId: '1ede2bf7-9c27-4f53-8c00-e2b29e170a0e', groupId: 'org.springframework.boot', nexusUrl: '18.224.155.110:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'devopstraining', version: '1.3.5.RELEASE'
+                
             } 
         }
         
