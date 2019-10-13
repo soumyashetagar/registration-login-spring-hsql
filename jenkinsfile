@@ -3,7 +3,7 @@ pipeline {
    
     stages {
 
-      stage('clean')
+      stage('clean and build')
             {
                 steps
                  { 
@@ -20,7 +20,8 @@ pipeline {
         
         stage('deploy'){
         steps{  
-          sshagent(['tomcat-dev']) {
+         
+sshagent(['tomcat-dev']) {
             sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.36.233:~/apache-tomcat-9.0.26/webapps/'
             }
         }
