@@ -16,10 +16,11 @@ pipeline {
             }
         stage("nexus") {
             steps {
+          withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'password', usernameVariable:'username')]) {
+          sh 'curl -u ${username}:${password} --uploadfile target/auth-1.3.5.RELEASE.war http://ec2-18-224-155-110.us-east-2.compute.amazonaws.com:8081/nexus/devopstraining/phoenix'
+}
+
          
-          sh 'curl -v -F r=devopstraining -F hasPom=true -F e=war -F file=@pom.xml -F file=@/var/lib/jenkins/workspace/DeployPipeline/target/auth-1.3.5.RELEASE.war -u $NEXUS_CRED http://ec2-18-224-155-110.us-east-2.compute.amazonaws.com:8081/nexus'
-                
-            } 
         }
         
         stage('deploy'){
