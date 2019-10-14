@@ -5,6 +5,7 @@
     <artifactId>auth</artifactId>
     <name>auuth</name>
     <description>auth</description>
+	 <version>1.0.0.phoenix</version>
     <packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
