@@ -12,8 +12,10 @@ pipeline {
             }
         stage("nexus") {
             steps {
-            
-            nexusArtifactUploader artifacts: [[artifactId: 'spring-boot-starter-parent', classifier: '', file: '/var/lib/jenkins/workspace/DeployPipeline/target/auth-1.3.5.RELEASE.war', type: 'war']], credentialsId: '1ede2bf7-9c27-4f53-8c00-e2b29e170a0e', groupId: 'org.springframework.boot', nexusUrl: '18.224.155.110:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'devopstraining', version: '1.3.5.RELEASE'
+            environment {
+                NEXUS_CRED = credentials('nexus-credentials')
+            }
+           curl -v -F r=devopstraining -F hasPom=true -F e=war -F file=@pom.xml -F file=@/var/lib/jenkins/workspace/DeployPipeline/target/auth-1.3.5.RELEASE.war -u $NEXUS_CRED http://ec2-18-224-155-110.us-east-2.compute.amazonaws.com:8081/nexus
                 
             } 
         }
