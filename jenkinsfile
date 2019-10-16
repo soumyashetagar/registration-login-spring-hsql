@@ -14,13 +14,7 @@ pipeline {
                     sh 'mvn clean package'
                  }
             }
-             stage("build & SonarQube analysis") {
-            steps {
-              withSonarQubeEnv('sonarqube') {
-                sh 'mvn clean package sonar:sonar'
-              }
-            } 
-            }
+             
         stage("nexus") {
             steps {
           withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'password', usernameVariable:'username')]) {
